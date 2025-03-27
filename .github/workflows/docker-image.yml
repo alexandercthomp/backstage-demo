@@ -19,5 +19,9 @@ jobs:
         yarn install --immutable
         yarn tsc
         yarn build:backend
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
     - name: Build Docker Image
-      run: docker image build . -f packages/backend/Dockerfile --tag backstage:v1
+      run: docker build -f packages/backend/Dockerfile -t ${{ secrets.DOCKER_HUB_USERNAME }}/backstage:v1 .
+    - name: Push Docker Image
+      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backstage:v1
