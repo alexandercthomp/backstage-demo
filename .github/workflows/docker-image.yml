@@ -1,0 +1,23 @@
+name: Build Backstage docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Dependencies
+      run: |
+        yarn install --immutable
+        yarn tsc
+        yarn build:backend
+    - name: Build Docker Image
+      run: docker image build . -f packages/backend/Dockerfile --tag backstage:v1
