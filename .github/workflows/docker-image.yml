@@ -14,7 +14,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Debug Environment Variables
+      env:
+        AUTH_GITHUB_CLIENT_ID: ${{ secrets.AUTH_GITHUB_CLIENT_ID }}
+        AUTH_GITHUB_CLIENT_SECRET: ${{ secrets.AUTH_GITHUB_CLIENT_SECRET }}
       run: |
         echo "AUTH_GITHUB_CLIENT_ID=${AUTH_GITHUB_CLIENT_ID}"
         echo "AUTH_GITHUB_CLIENT_SECRET=${AUTH_GITHUB_CLIENT_SECRET}"
