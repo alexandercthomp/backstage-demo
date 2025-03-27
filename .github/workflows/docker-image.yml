@@ -15,13 +15,21 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Dependencies
+      env:
+        AUTH_GITHUB_CLIENT_ID: ${{ secrets.AUTH_GITHUB_CLIENT_ID }}
+        AUTH_GITHUB_CLIENT_SECRET: ${{ secrets.AUTH_GITHUB_CLIENT_SECRET }}
       run: |
         yarn install --immutable
         yarn tsc
         yarn build:backend
+
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
     - name: Build Docker Image
-      run: docker build -f packages/backend/Dockerfile -t ${{ secrets.DOCKER_HUB_USERNAME }}/backstage:v1 .
-    - name: Push Docker Image
-      run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backstage:v1
+      env:
+        AUTH_GITHUB_CLIENT_ID: ${{ secrets.AUTH_GITHUB_CLIENT_ID }}
+        AUTH_GITHUB_CLIENT_SECRET: ${{ secrets.AUTH_GITHUB_CLIENT_SECRET }}
+      run: | 
+        docker build -f packages/backend/Dockerfile -t ${{ secrets.DOCKER_HUB_USERNAME }}/backstage:v1 .
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/backstage:v1
