@@ -16,8 +16,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Debug Environment Variables
       run: |
-        echo "GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}"
-        echo "GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}"
+        echo "AUTH_GITHUB_CLIENT_ID=${AUTH_GITHUB_CLIENT_ID}"
+        echo "AUTH_GITHUB_CLIENT_SECRET=${AUTH_GITHUB_CLIENT_SECRET}"
 
 
     
