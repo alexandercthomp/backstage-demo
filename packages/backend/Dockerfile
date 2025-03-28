@@ -14,6 +14,9 @@
 
 FROM node:20-bookworm-slim
 
+# Install Git and dependencies
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
 # Set Python interpreter for `node-gyp` to use
 ENV PYTHON=/usr/bin/python3
 
